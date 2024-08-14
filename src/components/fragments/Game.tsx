@@ -7,17 +7,16 @@ const initialSquares = Array(9).fill(null);
 export default function Game() {
   const [history, setHistory] = useState<(string | null)[][]>([initialSquares]);
   const [currentMove, setCurrentMove] = useState(0);
-  const [xIsNext, setXIsNext] = useState(true); // X always starts
-  const [isAI, setIsAI] = useState(false); // Multiplayer by default
+  const [xIsNext, setXIsNext] = useState(true);
+  const [isAI, setIsAI] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const currentSquares = history[currentMove];
 
   useEffect(() => {
     if (isAI && !xIsNext && !isGameOver) {
-      // AI move logic
       const timeout = setTimeout(() => {
         makeAIMove();
-      }, 500); // AI moves after a short delay
+      }, 200);
 
       return () => clearTimeout(timeout);
     }
@@ -46,7 +45,7 @@ export default function Game() {
     handlePlay(nextSquares);
   }
 
-  const moves = history.map((squares, move) => {
+  const moves = history.map((_squares, move) => {
     const description = move > 0 ? `Pergi ke langkah #${move}` : 'Pergi ke awal permainan';
     return (
       <li key={move} className="mb-2">
